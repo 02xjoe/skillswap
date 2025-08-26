@@ -1,11 +1,11 @@
 import {Routes,Route,Navigate} from 'react-router-dom'
 import Navbar from  './components/Navbar.jsx'
 import Home from './pages/Home.jsx'
-import Login from './pages/login.jsx'
+import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Profile from './pages/Profile.jsx'
-import ProtectedRoute from './components/HProtectedRoute.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 import {AuthProvider} from './context/AuthContent.jsx'
 
 export default function App(){
