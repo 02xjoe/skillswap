@@ -38,7 +38,7 @@ export default function Register(){
                 <button className='w-full border p-2 rounded bg-black text-white'>Sign up</button>
             </form>
 
-                <p className='mt-2 text-sm'>Already have an account? <Link to='/login' classname='underline'>
+                <p className='mt-2 text-sm'>Already have an account?? <Link to='/login' classname='underline'>
                     Log in</Link>
                 </p>
 
