@@ -1,16 +1,20 @@
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_API_KEY,
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: "AIzaSyDVNYoQIsfbirS34NngSU9hMB3qXEFeZNg",
+  authDomain: "skillswap-851a4.firebaseapp.com",
+  projectId: "skillswap-851a4",
+  storageBucket: "skillswap-851a4.firebasestorage.app",
+  messagingSenderId: "1026335408883",
+  appId: "1:1026335408883:web:371384474a1e6f340aad86",
+  measurementId: "G-F8L1V1SBSY"
 }
 
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 export const auth = getAuth(app);
 export const db = getFirestore(app);

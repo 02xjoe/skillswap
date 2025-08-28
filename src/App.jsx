@@ -6,7 +6,7 @@ import Register from './pages/Register.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Profile from './pages/Profile.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
-import {AuthProvider} from './context/AuthContent.jsx'
+import {AuthProvider} from './context/AuthContext.jsx'
 
 export default function App(){
   return (
@@ -19,20 +19,20 @@ export default function App(){
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register/>}/>
             <Route
-            path='/dashboard'
-            element={
-              <ProtectedRoute>
-                <Dashboard/>
-              </ProtectedRoute>
-            }
+               path='/dashboard'
+               element={
+                 <ProtectedRoute>
+                   <Dashboard/>
+                </ProtectedRoute>
+              }
             />
             <Route
-            path='/profile'
-            element={
-              <ProtectedRoute>
+              path='/profile'
+              element={
+                <ProtectedRoute>
                 <Profile/>
-              </ProtectedRoute>
-            }
+                </ProtectedRoute>
+              }
             />
             <Route path='*' element={<Navigate to='/'replace/>}/>
           </Routes>

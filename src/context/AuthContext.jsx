@@ -1,5 +1,5 @@
-import {createContent, useContext, useState, useEffect, createContext} from 'react'
-    import {auth} from './services/firebase.js'
+import {createContext, useContext, useState, useEffect} from 'react'
+    import {auth} from '../services/firebase.js'
     import{
         onAuthStateChanged,
         signInWithEmailAndPassword,
@@ -7,7 +7,8 @@ import {createContent, useContext, useState, useEffect, createContext} from 'rea
         signOut,
     } from 'firebase/auth'
 
-    const AuthContent = createContext()
+    
+    const AuthContext = createContext()
 
     export function AuthProvider({children}){
         const [user,setUser] = useState(null)
@@ -34,7 +35,7 @@ import {createContent, useContext, useState, useEffect, createContext} from 'rea
 
 
     export function useAuth(){
-        const context = useContext(AuthContent)
+        const context = useContext(AuthContext)
         if(!context) throw new Error('useAuth must be used within an AuthProvider')
             return context
     }
