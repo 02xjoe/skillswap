@@ -14,161 +14,111 @@ import {
 import {db} from '../services/firebase.js'
 import {useAuth} from '../context/AuthContext.jsx'
 
-export default function Skills(){
+export default function Skills() {
     const {user} = useAuth()          //this is the current logged-in user(may be null)
     //  if no user is logged in)
     const [skills, setSkills]= useState([]) //list is fectched from firestore
-    const [title, setTitle] = useState('')   //new post title
-    const [description, setDescription] = useState('') // new post descr
-    const [editingId, setEditingId]= useState(null) //Id being edited
-    const [editingTitle, setEditingTitle] = useState('') //
-    const [editingDescription, setEditingDescription] = useState('') //
+    const [newSkill, setNewSkill] = useState('') //for new skill input field
+    const [editingIndex, setEditingIndex] = useState(null) //
+    const [editValue, setEditValue] = useState('') //
 
  //1. subscribe to Firestore 'swaps' where category == 'skill'
 
-    useEffect(() =>{
-        const q = query(
-            collection(db, 'swaps'),
-            where('category', '==', 'skills'),
-            orderBy('createdAt', 'desc'),
-        )
-        const unsub = onSnapshot(q, (snap)=>{
-            const items = snap.docs.map(d =>({
-                id: d.id,
-                ...d.data(),
-            }))
-            setSkills(items)
-        })
+      // ✅ Add new skill
+  const handleAddSkill = () => {
+    if (newSkill.trim() === "") return;
+    setSkills([...skills, newSkill]);
+    setNewSkill(""); // clear input after adding
+  };
 
-        return() => unsub()
-    },[])
+  // ✅ Enable editing
+  const handleEditSkill = (index) => {
+    setEditingIndex(index);
+    setEditValue(skills[index]);
+  };
 
-//2. add new skill post
-     async function handleAdd(e){
-        e.preventDefault()
-        if(!title.trim()) return
-        try{
-            await addDoc(collection(db, 'swaps'),{
-                title: title.trim(),
-                description:description.trim(),
-                category:'skills',  //future-proofing (other categories like 'jobs' may be added later)
-                createdBy: user? user.uid : null,
-                createdAt: serverTimestamp(),
-            })
-            setTitle('')
-            setDescription('')
-        
-        }   catch (err) {
-            console.error('Add failed', err)
-        }
-     }
+  // ✅ Save edited skill
+  const handleSaveEdit = (index) => {
+    const updated = [...skills];
+    updated[index] = editValue;
+    setSkills(updated);
+    setEditingIndex(null);
+    setEditValue("");
+  };
 
-// 3) delete (only owner can delete)
-    async function handleDelete(od, ownerId) {
-        if (!user || user.uid !== ownerId){
-            return alert ('You can only delete your own posts')
-        }
-         await deleteDoc(doc(db, 'swaps', id))
-    }    
-    
-// 4 start editing (popular fields)
-    function startEdit(item) {
-        setEditingId(item.id)
-        setEditingTitle(item.title ||'')
-        setEditingDescription(item.description || '')
-    }
+   // ✅ Cancel editing
+  const handleCancelEdit = () => {
+    setEditingIndex(null);
+    setEditValue("");
+  };
 
-// 5 save edit
-   async function saveEdit(id) {
-        if (!editingTitle.trim()) return
-        await updateDoc(doc(db, 'swaps', id), {
-        title:editingTitle.trim(),
-        description:editingDescription.trim(),
-        updatedAt: serverTimestamp(),
-       })
-       setEditingId(null)
-       setEditingTitle('')
-       setEditingDescription('')
-    }
+  return (
+    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">Skills</h2>
 
-    return (
-        <div className = 'p-6 bg-white rounded-lg shadow-md'>
-            <h1 className='text-2xl font-bold mb-4'>Skills</h1>
+      {/* Input box + add button */}
+      <div className="flex gap-2 mb-6">
+        <input
+          type="text"
+          placeholder="Enter a skill..."
+          value={newSkill}
+          onChange={(e) => setNewSkill(e.target.value)}
+          className="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <button
+          onClick={handleAddSkill}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+        >
+          Add Skill
+        </button>
+      </div>
 
-            {/* Add form (only if user is logged in)*/}
-            {user?(
-                <form onSubmit={handleAdd} className='flex flex-col sm:flex-row gap-2 mb-6'>
-                    <input 
-                       className='flex-1 border rounded-lg px-3 py-2'
-                       placeholder='Title- e.g. Teach React hooks'
-                       value = {title}
-                       onChange = {(e) => setTitle(e.target.value)}
-                     />
-                    <input
-                        className = 'flex-1 border rounded-lg px-3 py-2'
-                        placeholder='Short description(optional)'
-                        value={title}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                    <button className='bg-blue-600 text-white px-4 py-2 rounded-lg'>
-                        Add
-                    </button>
-                </form>
-            ):(            
-                <p className='mb-4 text-sm text-gray-600'>
-                    Log in to post a skill.
-                </p>
+      {/* Skills list */}
+      <ul className="space-y-3">
+        {skills.length === 0 && (
+          <p className="text-gray-500">No skills added yet. Try adding one!</p>
+        )}
+
+        {skills.map((skill, index) => (
+          <li
+            key={index}
+            className="flex items-center justify-between border p-3 rounded-lg shadow-sm"
+          >
+            {editingIndex === index ? (
+              <>
+                <input
+                  type="text"
+                  value={editValue}
+                  onChange={(e) => setEditValue(e.target.value)}
+                  className="flex-1 border rounded-lg px-3 py-2 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                  onClick={() => handleSaveEdit(index)}
+                  className="bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 transition"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={handleCancelEdit}
+                  className="bg-gray-400 text-white px-3 py-1 rounded-lg hover:bg-gray-500 transition ml-2"
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <>
+                <span className="text-lg">{skill}</span>
+                <button
+                  onClick={() => handleEditSkill(index)}
+                  className="bg-yellow-500 text-white px-3 py-1 rounded-lg hover:bg-yellow-600 transition"
+                >
+                  Edit
+                </button>
+              </>
             )}
-
-            {/* List */}
-            <ul className='space-y-4'>
-                {skills.map(item =>(                    
-                    <li key={item.id} className='border p-4 rounded-md bg-gray-50'>
-                        {editingId === item.id ? (
-
-                    <>
-                        <input
-                         className="w-full border p-2 mb-2 rounded"
-                         value={editingTitle}
-                         onChange={(e) => setEditingTitle(e.target.value)}
-                        />
-                        <textarea
-                        className="w-full border p-2 mb-2 rounded"
-                        value={editingDescription}
-                        onChange={(e) => setEditingDescription(e.target.value)}
-                        />
-                        <div className="flex gap-2">
-                        <button onClick={() => saveEdit(item.id)} className="bg-green-600 text-white px-3 py-1 rounded">
-                        Save
-                        </button>
-                        <button onClick={() => setEditingId(null)} className="px-3 py-1 rounded border">
-                         Cancel
-                         </button>
-                        </div>
-                     </>
-                   ):(
-                        <div className="flex justify-between items-start">
-                            <div>
-                                 <h3 className="text-lg font-semibold">{item.title}</h3>
-                                {item.description && <p className="text-sm text-gray-600 mt-1">{item.description}</p>}
-                                <p className="text-xs text-gray-400 mt-2">
-                                {item.createdBy === user?.uid ? 'Posted by you' : `Posted by ${item.createdBy ?? 'someone'}`}
-                                 </p>
-                            </div>
-
-                           <div className="flex gap-2">
-                               {item.createdBy === user?.uid && (
-                             <>
-                                <button onClick={() => startEdit(item)} className="px-3 py-1 border rounded">Edit</button>
-                                <button onClick={() => handleDelete(item.id, item.createdBy)} className="px-3 py-1 rounded bg-red-600 text-white">Delete</button>
-                             </>
-                               )}
-                            </div>
-                       </div>
-                    )}
-                   </li>
-            ))}
-           </ul>
-        </div>
-    )
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
