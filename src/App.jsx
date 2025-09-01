@@ -12,9 +12,9 @@ import {AuthProvider} from './context/AuthContext.jsx'
 export default function App(){
   return (
     <AuthProvider>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray=50">
         <Navbar/>
-        <main className='max-w-6xl mx-auto p-4'>
+        <main className='w-full px-4'>
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/login' element={<Login/>}/>
