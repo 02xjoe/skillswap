@@ -1,32 +1,39 @@
-import { Link, NavLink } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext.jsx'
+import { Link, NavLink } from "react-router-dom";               // links
+import { useAuth } from "../context/AuthContext.jsx";           // auth state
 
 export default function Navbar() {
-  const { user, logout } = useAuth()
+  const { user, logout } = useAuth();                           // user + logout fn
 
   return (
-    <header className="bg-white border-b">
-        <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
-            <Link to="/" className="text-2xl font-bold text-blue-600">SwapHub</Link>
+    // full-width header bar
+    <header className="w-full bg-white border-b">
+      {/* use a wide container so content isn’t cramped; add gap for spacing */}
+      <div className="max-w-screen-xl mx-auto flex items-center justify-between gap-8 px-4 py-3">
+        {/* brand on the left */}
+        <Link to="/" className="text-2xl font-bold text-blue-600">SwapHub</Link> 
 
-            <nav className="flex items-center gap-4">
-            <NavLink to="/" className={({ isActive }) => isActive ? 'text-blue-600' : 'text-gray-700'}>Home</NavLink>
-            <NavLink to="/skills" className={({ isActive }) => isActive ? 'text-blue-600' : 'text-gray-700'}>Skills</NavLink>
+        {/* nav links on the right; 'ml-auto' pushes them away from brand */}
+        <nav className="ml-auto flex items-center gap-4">
+          <NavLink to="/" className={({ isActive }) => isActive ? "text-blue-600" : "text-gray-700"}>Home</NavLink>
+          <NavLink to="/skills" className={({ isActive }) => isActive ? "text-blue-600" : "text-gray-700"}>Skills</NavLink>
 
-            {!user ? (
+          {!user ? (
             <>
-              <Link to="/login" className="px-4 py-2 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition">Login</Link>
-              <Link to="/register" className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition">Sign Up</Link>
+              {/* simple border button */}
+              <Link to="/login" className="text-blue-600">Login</Link>
+              {/* solid CTA button */}
+              <Link to="/register" className="text-blue-600">Sign Up</Link>
             </>
-            ) : (
+          ) : (
             <>
-              <Link to="/dashboard" className="px-3 py-1 rounded border">Dashboard</Link>
-              <button onClick={logout} className="px-3 py-1 rounded border">Logout</button>
+              <Link to="/dashboard" className="px-4 py-2 ">Dashboard</Link>
+              <button onClick={logout} className="bg-blue-600 text-blue px-3 py-1 ">Logout</button>
             </>
-           )}
-           </nav>
-        </div>
+          )}
+        </nav>
+      </div>
     </header>
-  )
+  );
 }
+
         

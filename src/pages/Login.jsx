@@ -34,7 +34,7 @@ export default function Login(){
                 <input className="w-full p-2 border rounded"
                 placeholder="Password" type="password" value={password}
                 onChange={(e)=>setPassword(e.target.value)}/>
-                <button type="submit" className="w-full p-2 bg-blue text-black rounded">Log in</button>
+                <button type="submit" className="w-full !bg-blue-600 text-white px-4 py-2 rounded-lg hover: !bg-blue-700 transition">Log in</button>
                 
             </form>
             <p className="mt-2 text-sm">No account? <Link to='/register' className="underline">Sign up</Link></p>

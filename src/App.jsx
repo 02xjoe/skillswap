@@ -9,16 +9,23 @@ import Skills from './pages/Skills.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import {AuthProvider} from './context/AuthContext.jsx'
 
-export default function App(){
+export default function App() {
   return (
-    <AuthProvider>
-      <div className="min-h-screen bg-gray=50">
-        <Navbar/>
-        <main className='w-full px-4'>
-          <Routes>
-            <Route path='/' element={<Home/>}/>
-            <Route path='/login' element={<Login/>}/>
-            <Route path='/register' element={<Register/>}/>
+    // full-screen height + light gray background
+    <div className="min-h-screen bg-gray-50">
+      {/* full-width navbar at the top */}
+      <Navbar />
+
+      {/* FULL-WIDTH main area (remove max-w constraint) */}
+      <main className="max-w-7xl mx-auto px-6">
+        {/* declare the app routes */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          {/* protected pages require auth */}
+
             <Route
                path='/dashboard'
                element={
@@ -43,12 +50,12 @@ export default function App(){
                 </ProtectedRoute>
               }
             />
+            {/* fallback: redirect any unknown routes to home */}
             <Route path='*' element={<Navigate to='/'replace/>}/>
-          </Routes>
-        </main>
-      </div>
-    </AuthProvider>
-  )
+        </Routes>
+      </main>
+    </div>
+  );
 }
   
   
