@@ -3,7 +3,7 @@ import { Repeat } from "lucide-react";
 
 export default function Banner() {
   return (
-    <div className="w-full relative bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white py-7">
+    <div className="w-full relative bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white py-7 ">
       {/* Grid for text + icon */}
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 items-center gap-8">
         {/* Left Column */}
@@ -37,7 +37,7 @@ export default function Banner() {
       <div className="absolute inset-x-0 bottom-6 flex justify-center">
         <a
           href="/signup"
-          className="px-8 py-3 bg-white text-blue-700 font-semibold rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-100 transition"
+          className="px-8 py-3 bg-white !text-blue-500 font-semibold rounded-lg shadow-lg hover:bg-yellow-300 hover:!text-blue-800 transition"
         >
           Get Started Free
         </a>

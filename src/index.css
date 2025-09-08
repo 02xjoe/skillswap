@@ -4,18 +4,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Make html,body and the React root fill viewport height*/
-html, body, #root {
+/* Make html, body, and #root fill viewport height */
+html,
+body,
+#root {
   height: 100%;
-}  
-
-/* Apply the grey background color to the whole body */
-body {
-  margin:0;
-  @apply bg-gray-50; /* light grey background */
-  overflow-x: hidden; /* prevent horizontal overflow */
+  margin: 0; /* Ensure no default margin */
+  padding: 0; /* Ensure no default padding */
 }
 
+/* Apply the grey background color to the main content area, not the full body */
+main {
+  @apply bg-gray-50;
+  overflow-x: hidden; /* Prevent horizontal overflow for main content */
+}
+
+/* Reset default styles */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -54,7 +58,7 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition:  0.25s;
+  transition: 0.25s;
 }
 button:hover {
   border-color: none;

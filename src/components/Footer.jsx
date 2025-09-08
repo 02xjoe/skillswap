@@ -5,9 +5,9 @@ import { Mail, Twitter, Github, Linkedin, Instagram } from "lucide-react"; // ic
 export default function Footer() {
   return (
     // outer footer  full width background (this should touch both edges)
-    <footer className="w-full bg-gray-900 text-gray-300">
+    <footer className="w-full bg-gray-900 text-gray-300 mt-24">
       {/* inner content: constrained to max width for readable layout */}
-      <div className="max-w-7xl mx-auto px-6 py-5 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-6 py-7 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Column 1: Brand & short description */}
         <div>
           <h3 className="text-white font-semibold text-lg mb-2">SwapHub</h3>
@@ -53,7 +53,7 @@ export default function Footer() {
           <div className="flex items-center space-x-4">
             {/* Each anchor opens in new tab - - replace hrefs with your real pages */}
             <a
-              href="https://twitter.com/yourhandle"
+              href="https://twitter.com/obahjoe"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white"
@@ -63,7 +63,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://github.com/yourhandle"
+              href="https://github.com/02xjoe"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white"
@@ -73,7 +73,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://www.linkedin.com/in/yourhandle"
+              href="https://www.linkedin.com/in/02xjoe"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white"
@@ -83,7 +83,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://instagram.com/yourhandle"
+              href="https://instagram.com/obahjoe"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white"

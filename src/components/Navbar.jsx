@@ -1,39 +1,73 @@
-import { Link, NavLink } from "react-router-dom";               // links
-import { useAuth } from "../context/AuthContext.jsx";           // auth state
+// src/components/Navbar.jsx
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
-  const { user, logout } = useAuth();                           // user + logout fn
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    // full-width header bar
-    <header className="w-full bg-white border-b">
-      {/* use a wide container so content isn’t cramped; add gap for spacing */}
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between gap-8 px-4 py-3">
-        {/* brand on the left */}
-        <Link to="/" className="text-2xl font-bold text-blue-600">SwapHub</Link> 
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all ${
+        scrolled
+          ? "bg-white/90 backdrop-blur-md shadow-lg"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <Link to="/" className="text-2xl font-extrabold bg-gradient-to-r from-yellow-400 to-pink-500 text-transparent bg-clip-text">
+          SwapHub
+        </Link>
 
-        {/* nav links on the right; 'ml-auto' pushes them away from brand */}
-        <nav className="ml-auto flex items-center gap-4">
-          <NavLink to="/" className={({ isActive }) => isActive ? "text-blue-600" : "text-gray-700"}>Home</NavLink>
-          <NavLink to="/skills" className={({ isActive }) => isActive ? "text-blue-600" : "text-gray-700"}>Skills</NavLink>
+        {/* Nav Links */}
+        <div className="hidden md:flex space-x-8 font-medium">
+          <Link
+            to="/"
+            className="text-gray-800 hover:text-blue-600 relative group"
+          >
+            Home
+            <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-blue-600 transition-all group-hover:w-full"></span>
+          </Link>
+          <Link
+            to="/skills"
+            className="text-gray-800 hover:text-blue-600 relative group"
+          >
+            Skills
+            <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-blue-600 transition-all group-hover:w-full"></span>
+          </Link>
+          <Link
+            to="/about"
+            className="text-gray-800 hover:text-blue-600 relative group"
+          >
+            About
+            <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-blue-600 transition-all group-hover:w-full"></span>
+          </Link>
+        </div>
 
-          {!user ? (
-            <>
-              {/* simple border button */}
-              <Link to="/login" className="text-blue-600">Login</Link>
-              {/* solid CTA button */}
-              <Link to="/register" className="text-blue-600">Sign Up</Link>
-            </>
-          ) : (
-            <>
-              <Link to="/dashboard" className="px-4 py-2 ">Dashboard</Link>
-              <button onClick={logout} className="bg-blue-600 text-blue px-3 py-1 ">Logout</button>
-            </>
-          )}
-        </nav>
+        {/* Auth Buttons */}
+        <div className="flex space-x-4">
+          <Link
+            to="/login"
+            className="px-4 py-2 rounded-lg text-blue-700 font-semibold hover:bg-blue-100 transition"
+          >
+            Login
+          </Link>
+          <Link
+            to="/signup"
+            className="px-5 py-2 rounded-lg bg-gradient-to-r from-yellow-400 to-pink-500 text-white font-semibold shadow-lg hover:opacity-90 transition"
+          >
+            Get Started
+          </Link>
+        </div>
       </div>
-    </header>
+    </nav>
   );
 }
-
-        
