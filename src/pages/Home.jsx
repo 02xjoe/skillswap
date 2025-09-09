@@ -64,7 +64,7 @@ export default function Home() {
 
         {/* Skills Grid container*/}
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-6">
-          {/*i used .map() to loop through an array of skill names. for each new skill, a card is generated automatically */}
+          {/*i used .map() to loop through an array of skill names.. for each new skill, a card is generated automatically */}
           {[
             "Language Exchange",
             "Graphic Design",

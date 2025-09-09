@@ -16,7 +16,7 @@ export default function App() {
       {/* Full-width navbar at the top */}
       <Navbar />
 
-      {/* Main routes – no max-width here! */}
+      {/* Main routes – no max-width here!! */}
       <main className="w-full min-h-screen bg-gray-50">
         <Routes>
           <Route path="/" element={<Home />} />
