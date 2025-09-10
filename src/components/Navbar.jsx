@@ -62,7 +62,7 @@ export default function Navbar() {
           </Link>
           <Link
             to="/signup"
-            className="px-5 py-2 rounded-lg bg-gradient-to-r from-yellow-400 to-pink-500 text-white font-semibold shadow-lg hover:opacity-90 transition"
+            className="px-5 py-2 rounded-lg bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 text-white font-semibold shadow-lg hover:opacity-90 transition"
           >
             Get Started
           </Link>

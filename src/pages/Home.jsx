@@ -5,6 +5,7 @@ import { Repeat } from "lucide-react";
 import {Pencil, Search, MessageSquare, } from "lucide-react";
 import { motion } from "framer-motion"; // ✅ for animations;
 import { Layers, Handshake, CheckCircle, Zap } from "lucide-react";
+import { Briefcase, BookOpen, Code, Palette } from "lucide-react";
 
 export default function Home() {
   return (
@@ -56,92 +57,124 @@ export default function Home() {
       </section>
 
       {/* FEATURED SKILLS */} 
-       {/* FEATURED SKILLS */}
-      <section className=" py-20 bg-gray-50 ">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
-          Featured Skills
-        </h2>
 
-        {/* Skills Grid container*/}
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-6">
-          {/*i used .map() to loop through an array of skill names.. for each new skill, a card is generated automatically */}
+
+      
+      <section className="py-20 bg-gray-50">
+        {/* Section Heading */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-extrabold text-gray-900">
+            Featured Skills
+          </h2>
+          <p className="mt-4 text-lg text-gray-600">
+            Discover the most in-demand skills people are swapping today.
+          </p>
+        </div>
+
+        {/* Skills Grid */}
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 px-6">
           {[
-            "Language Exchange",
-            "Graphic Design",
-            "Cooking Lessons",
-            "Digital Marketing",
-            "Video Editing",
-            "Photography",
-          ].map((skill, index) => (
-            <div
+            {
+              icon: <Briefcase className="w-12 h-12 text-blue-600" />,
+              title: "Business & Career",
+              skills: ["Resume Writing", "Marketing", "Public Speaking"],
+            },
+            {
+              icon: <BookOpen className="w-12 h-12 text-green-600" />,
+              title: "Education & Tutoring",
+              skills: ["Math", "Language Learning", "Exam Prep"],
+            },
+            {
+              icon: <Code className="w-12 h-12 text-purple-600" />,
+              title: "Tech & Coding",
+              skills: ["Web Dev", "Python", "UI/UX"],
+            },
+            {
+              icon: <Palette className="w-12 h-12 text-pink-600" />,
+              title: "Creative Arts",
+              skills: ["Drawing", "Music", "Video Editing"],
+            },
+          ].map((item, index) => (
+            <motion.div
               key={index}
-              className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1"
+              className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-2xl hover:-translate-y-2 transition-transform"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              viewport={{ once: true }}
             >
-              <h3 className="text-xl font-semibold text-blue-600 mb-2">
-                {skill}
+              {item.icon}
+              <h3 className="mt-4 text-xl font-semibold text-gray-800">
+                {item.title}
               </h3>
-              <p className="text-gray-600 text-sm">
-                Available for swap with other skills
-              </p>
-            </div>
+              <ul className="mt-3 text-gray-600 space-y-1">
+                {item.skills.map((skill, i) => (
+                  <li key={i}>• {skill}</li>
+                ))}
+              </ul>
+            </motion.div>
           ))}
         </div>
 
+       
+
         {/* CTA Button */}
-        <div className="mt-12 text-center">
-          <Link
-            to="/skills"
-            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 !text-white font-semibold rounded-lg shadow-lg hover:opacity-90 transition"
-          >
-            View All Skills
-          </Link>
+        <div className="text-center mt-16 ">
+          <button className="px-6 py-3 !bg-gradient-to-r !from-pink-400 !via-red-400 !to-yellow-500  text-white  font-semibold rounded-lg 
+          shadow-lg hover:opacity-90  !from-yellow-500 !via-red-500 !to-pink-400 focus:outline-none focus:ring-0  ">
+            Explore All Skills
+          </button>
         </div>
       </section>
 
-      {/* Divider */}
-      <div className="w-full h-[2px] bg-gray-200"></div>
-
-      {/* === REAL-LIFE SWAP EXAMPLES SECTION === */}
-      <section className="py-20 bg-white">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
-          Real-Life Swaps
+      {/* === REAL LIFE SWAP STORIES === */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
+        {/* Heading */}
+        <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-4">
+          Real Life Swap Stories
         </h2>
+        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+          See how people are exchanging skills and value in creative ways across the world.
+        </p>
 
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
+        {/* Stories Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto px-6">
           {/* Story 1 */}
-          <div className="p-6 bg-gradient-to-r from-yellow-100 to-yellow-50 rounded-2xl shadow-md hover:shadow-lg transition">
-            <p className="text-gray-700 italic">
-              “A student couldn’t afford tuition fees, so a local business
-              allowed them to work weekends in exchange. Both sides won.”
+          
+          <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition">
+            <h3 className="text-lg font-semibold text-blue-600 mb-2">Student & Tuition</h3>
+            <p className="text-gray-600 text-sm">
+              A student couldn’t pay full tuition, so she worked weekends at a local business in exchange for school fees.
             </p>
-            <span className="block mt-4 text-sm font-semibold text-gray-600">
-              – Education Swap
-            </span>
           </div>
 
           {/* Story 2 */}
-          <div className="p-6 bg-gradient-to-r from-pink-100 to-pink-50 rounded-2xl shadow-md hover:shadow-lg transition">
-            <p className="text-gray-700 italic">
-              “A designer created a brand identity for a marketer, and in
-              return, learned growth-hacking strategies.”
+          <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition">
+            <h3 className="text-lg font-semibold text-pink-600 mb-2">Chef & Guitarist</h3>
+            <p className="text-gray-600 text-sm">
+              A chef offered private cooking classes in return for guitar lessons from a musician.
             </p>
-            <span className="block mt-4 text-sm font-semibold text-gray-600">
-              – Design x Marketing
-            </span>
           </div>
 
           {/* Story 3 */}
-          <div className="p-6 bg-gradient-to-r from-blue-100 to-blue-50 rounded-2xl shadow-md hover:shadow-lg transition">
-            <p className="text-gray-700 italic">
-              “A chef offered cooking classes in exchange for guitar lessons.
-              Two passions unlocked at once.”
+          <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition">
+            <h3 className="text-lg font-semibold text-purple-600 mb-2">Designer & Developer</h3>
+            <p className="text-gray-600 text-sm">
+              A web developer built a portfolio site for a designer, who in return created branding assets.
             </p>
-            <span className="block mt-4 text-sm font-semibold text-gray-600">
-              – Food x Music
-            </span>
+          </div>
+
+          {/* Story 4 */}
+          <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition">
+            <h3 className="text-lg font-semibold text-yellow-600 mb-2">Photographer & Event Planner</h3>
+            <p className="text-gray-600 text-sm">
+              A photographer covered an event for free, and got professional event planning for his own launch in return.
+            </p>
           </div>
         </div>
       </section>
+  
+
 
      {/*  ================= HOW IT WORKS SECTION =================*/}
       
@@ -180,7 +213,7 @@ export default function Home() {
               <Layers className="w-12 h-12 mx-auto mb-6 text-yellow-300" />
               <h3 className="text-xl font-semibold mb-2">List Your Skill or Item</h3>
               <p className="text-gray-300">
-                Share what you can offer — whether it’s coding, design, tutoring, or items to swap.
+                Share what you can offer -  whether it’s coding, design, tutoring, or items to swap.
               </p>
             </motion.div>
 
@@ -212,7 +245,7 @@ export default function Home() {
               <CheckCircle className="w-12 h-12 mx-auto mb-6 text-pink-400" />
               <h3 className="text-xl font-semibold mb-2">Swap & Collaborate</h3>
               <p className="text-gray-300">
-                Agree on fair terms and start exchanging — services, items, or both.
+                Agree on fair terms and start exchanging - services, items, or both.
               </p>
             </motion.div>
 
@@ -234,7 +267,21 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+
+      <svg
+        className="w-full h-24"
+        viewBox="0 0 1440 320"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill="#213547" /* {/* color matches footer background */
+          d="M0,128L48,138.7C96,149,192,171,288,186.7C384,203,480,213,576,208C672,203,768,181,864,160C960,139,1056,117,1152,117.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L0,320Z"
+        ></path>
+      </svg>
+       
       
+
 
 
     </>
