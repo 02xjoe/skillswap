@@ -9,7 +9,7 @@ import { useAuth } from "../context/AuthContext.jsx";              // current lo
 export default function Skills() {
   const { user } = useAuth();                                     // current user (or null)
 
-  // ---- form state for creating a skill post.
+  // ---- form state for creating a skill post..
   const [title, setTitle] = useState("");                         // skill title (single input)
   const [description, setDescription] = useState("");             // optional short description
 
