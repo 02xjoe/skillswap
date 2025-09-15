@@ -6,8 +6,12 @@ import {Pencil, Search, MessageSquare, } from "lucide-react";
 import { motion } from "framer-motion"; // ✅ for animations;
 import { Layers, Handshake, CheckCircle, Zap } from "lucide-react";
 import { Briefcase, BookOpen, Code, Palette } from "lucide-react";
+import { getAuth } from "firebase/auth";
 
 export default function Home() {
+  const auth = getAuth()
+  const user = auth.currentUser;
+  const target = user ? "/dashboard" : "/register";
   return (
     <>
       {/* HERO SECTION */}
