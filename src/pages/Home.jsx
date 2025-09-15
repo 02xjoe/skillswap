@@ -8,7 +8,7 @@ import { Layers, Handshake, CheckCircle, Zap } from "lucide-react";
 import { Briefcase, BookOpen, Code, Palette } from "lucide-react";
 import { getAuth } from "firebase/auth";
 
-export default function Home() {
+export default function Home() { 
   const auth = getAuth()
   const user = auth.currentUser;
   const target = user ? "/dashboard" : "/register";
@@ -39,13 +39,13 @@ export default function Home() {
           {/* yellow bg draws attention, so primary CTA, sec CTA is transparent wit border. */}
         <div className="mt-10 flex space-x-4">
           <Link
-            to="/signup"
+            to={target}
             className="px-8 py-3 bg-yellow-300 text-blue-900 font-semibold rounded-lg shadow-lg hover:bg-yellow-400 transition"
           >
             Get Started Free
           </Link>
           <Link
-            to="/how-it-works"
+            to={target}
             className="px-8 py-3 bg-transparent border border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-700 transition"
           >
             Learn More
@@ -124,10 +124,10 @@ export default function Home() {
 
         {/* CTA Button */}
         <div className="text-center mt-16 ">
-          <button className="px-6 py-3 !bg-gradient-to-r !from-pink-400 !via-red-400 !to-yellow-500  text-white  font-semibold rounded-lg 
+            <Link to ={target}  className="px-6 py-3 !bg-gradient-to-r !from-pink-400 !via-red-400 !to-yellow-500  text-white  font-semibold rounded-lg 
           shadow-lg hover:opacity-90  !from-yellow-500 !via-red-500 !to-pink-400 focus:outline-none focus:ring-0  ">
             Explore All Skills
-          </button>
+          </Link>
         </div>
       </section>
 

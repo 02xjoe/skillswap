@@ -1,8 +1,10 @@
 // src/components/Navbar.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // ✅ your context
 
 export default function Navbar() {
+  const { user, logout } = useAuth(); // ✅ access user state
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -23,7 +25,10 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-extrabold bg-gradient-to-r from-yellow-400 to-pink-500 text-transparent bg-clip-text">
+        <Link
+          to="/"
+          className="text-2xl font-extrabold bg-gradient-to-r from-yellow-400 to-pink-500 text-transparent bg-clip-text"
+        >
           SwapHub
         </Link>
 
@@ -31,21 +36,27 @@ export default function Navbar() {
         <div className="hidden md:flex space-x-8 font-medium">
           <Link
             to="/"
-            className="text-gray-800 hover:text-blue-600 relative group"
+            className={`${
+              scrolled ? "text-gray-800" : "text-white"
+            } hover:text-blue-600 relative group`}
           >
             Home
             <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-blue-600 transition-all group-hover:w-full"></span>
           </Link>
           <Link
             to="/skills"
-            className="text-gray-800 hover:text-blue-600 relative group"
+            className={`${
+              scrolled ? "text-gray-800" : "text-white"
+            } hover:text-blue-600 relative group`}
           >
             Skills
             <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-blue-600 transition-all group-hover:w-full"></span>
           </Link>
           <Link
             to="/about"
-            className="text-gray-800 hover:text-blue-600 relative group"
+            className={`${
+              scrolled ? "text-gray-800" : "text-white"
+            } hover:text-blue-600 relative group`}
           >
             About
             <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-blue-600 transition-all group-hover:w-full"></span>
@@ -54,18 +65,37 @@ export default function Navbar() {
 
         {/* Auth Buttons */}
         <div className="flex space-x-4">
-          <Link
-            to="/login"
-            className="px-4 py-2 rounded-lg text-blue-700 font-semibold hover:bg-blue-100 transition"
-          >
-            Login
-          </Link>
-          <Link
-            to="/signup"
-            className="px-5 py-2 rounded-lg bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 text-white font-semibold shadow-lg hover:opacity-90 transition"
-          >
-            Get Started
-          </Link>
+          {user ? (
+            <>
+              <Link
+                to="/dashboard"
+                className="px-4 py-2 rounded-lg text-blue-700 font-semibold hover:bg-blue-100 transition"
+              >
+                Dashboard
+              </Link>
+              <button
+                onClick={logout}
+                className="px-5 py-2 rounded-lg bg-gradient-to-r from-red-400 to-pink-500 text-white font-semibold shadow-lg hover:opacity-90 transition"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="px-4 py-2 rounded-lg text-blue-700 font-semibold hover:bg-blue-100 transition"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="px-5 py-2 rounded-lg bg-gradient-to-r from-yellow-400 to-pink-500 text-white font-semibold shadow-lg hover:opacity-90 transition"
+              >
+                Get Started
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>
