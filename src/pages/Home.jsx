@@ -18,7 +18,7 @@ export default function Home() {
 
       <section className="relative w-full pt-24 min-h-screen bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 flex flex-col justify-center items-center text-center px-6 overflow-hidden ">
         {/* This section ensures the hero takes entire viewport and content is centered hori and vertically */ }
-        {/* Floating Background Shapes */}
+        {/* Floating Background Shapess */}
         <div className="absolute top-10 left-40 w-24 h-24 bg-yellow-300 rounded-full opacity-30 animate-bounce"></div>
         <div className="absolute bottom-20 right-20 w-32 h-32 bg-pink-400 rounded-full opacity-20 animate-pulse"></div>
         <div className="absolute middle-10 left-70 w-24 h-32 bg-red-400 rounded-full opacity-30 animate-spin"></div>
