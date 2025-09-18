@@ -1,45 +1,111 @@
-import {useState} from 'react'
-import {useAuth} from '../context/AuthContext.jsx'
-import {useNavigate,Link} from 'react-router-dom'
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext.jsx";
+import { useNavigate, Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Mail, Lock } from "lucide-react"; // ✅ icons
 
-export default function Register(){
-    const {register} = useAuth()
-    const [email,setEmail] = useState('')
-    const [password,setPassword] = useState('')
-    const [error,setError] = useState('')
-    const navigate = useNavigate()
+export default function Register() {
+  const { register } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-    async function handleSubmit(e){
-        e.preventDefault()
-        setError('')
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError("");
 
-        try{
-            await register(email,password)
-            navigate('/dashboard')
-        }catch(error){
-            setError(error.message)
-        }
+    try {
+      await register(email, password);
+      navigate("/dashboard");
+    } catch (error) {
+      setError(error.message);
     }
+  }
 
-    return (
-        <div className="max-w-md mx-auto">
-            <h1 className='text-2xl font-semibold mb-4'>Create account</h1>
-            <form onSubmit={handleSubmit} className='space-y-3'>
-                {error && <div className='p-2 border rounded text-red-600'>{error}</div>}
-                <input className='w-full p-2 border rounded'
-                placeholder='Email' type='email' value={email}
-                onChange={(e)=>setEmail(e.target.value)}/>
-                <input className='w-full p-2 border rounded'
-                placeholder='Password' type='password' value={password}
-                onChange={(e)=>setPassword(e.target.value)}/>
-                <button className='w-full !bg-green-600 text-white px-4 py-2 rounded-lg hover:!bg-green-700'>Sign up</button>
-            </form>
+  return (
+    <div className="min-h-screen mt-10 flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
+      {/* Glow / Decoration */}
+      <div className="absolute top-20 left-10 w-72 h-72 bg-pink-300/30 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 right-10 w-72 h-72 bg-yellow-300/30 rounded-full blur-3xl"></div>
 
-                <p className='mt-2 text-sm'>Already have an account?? <Link to='/login' classname='underline'>
-                    Log in</Link>
-                </p>
+      {/* Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-md bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl p-8"
+      >
+        <h1 className="text-3xl font-bold text-center bg-gradient-to-r from-yellow-400 to-pink-500 bg-clip-text text-transparent">
+          Create Your Account
+        </h1>
+        <p className="text-center text-gray-500 mt-2 mb-6">
+          Join SwapHub and start swapping skills today!
+        </p>
 
+        {/* Error */}
+        {error && (
+          <div className="p-3 mb-4 rounded-lg bg-red-100 text-red-600 text-sm">
+            {error}
+          </div>
+        )}
 
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="relative">
+            <Mail className="absolute left-3 top-3 text-gray-400" size={18} />
+            <input
+              className="w-full pl-10 p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none"
+              placeholder="Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="relative">
+            <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
+            <input
+              className="w-full pl-10 p-3 border rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none"
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-3 rounded-lg bg-gradient-to-r !via-red-500-to-yellow-400 from-yellow-400 to-pink-500 text-white font-semibold shadow-lg hover:opacity-90 transition transform hover:scale-[1.02]"
+          >
+            Sign Up
+          </button>
+        </form>
+
+        {/* Divider */}
+        <div className="flex items-center my-6">
+          <hr className="flex-grow border-gray-300" />
+          <span className="mx-3 text-gray-400 text-sm">or</span>
+          <hr className="flex-grow border-gray-300" />
         </div>
-    )
+
+        {/* Social Placeholder */}
+        <div className="flex justify-center gap-4">
+          <button className="p-3 rounded-lg border hover:bg-gray-100">
+             Google
+          </button>
+          <button className="p-3 rounded-lg border hover:bg-gray-100">
+             Twitter
+          </button>
+        </div>
+
+        <p className="mt-6 text-center text-sm">
+          Already have an account?{" "}
+          <Link to="/login" className="text-pink-500 hover:underline">
+            Log in
+          </Link>
+        </p>
+      </motion.div>
+    </div>
+  );
 }

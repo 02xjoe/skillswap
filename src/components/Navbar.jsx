@@ -33,11 +33,11 @@ export default function Navbar() {
         </Link>
 
         {/* Nav Links */}
-        <div className="hidden md:flex space-x-8 font-medium">
+        <div className="hidden md:flex space-x-8  font-medium">
           <Link
             to="/"
             className={`${
-              scrolled ? "text-gray-800" : "text-white"
+              scrolled ? "text-gray-800" : "!text-blue-600"
             } hover:text-blue-600 relative group`}
           >
             Home
@@ -46,7 +46,7 @@ export default function Navbar() {
           <Link
             to="/skills"
             className={`${
-              scrolled ? "text-gray-800" : "text-white"
+              scrolled ? "text-gray-800" : "!text-blue-600"
             } hover:text-blue-600 relative group`}
           >
             Skills
@@ -55,7 +55,7 @@ export default function Navbar() {
           <Link
             to="/about"
             className={`${
-              scrolled ? "text-gray-800" : "text-white"
+              scrolled ? "text-gray-800" : "!text-blue-600"
             } hover:text-blue-600 relative group`}
           >
             About
@@ -84,13 +84,13 @@ export default function Navbar() {
             <>
               <Link
                 to="/login"
-                className="px-4 py-2 rounded-lg text-blue-700 font-semibold hover:bg-blue-100 transition"
+                className="px-4 py-2 rounded-lg !text-gold font-semibold hover:bg-blue-100 transition"
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="px-5 py-2 rounded-lg bg-gradient-to-r from-yellow-400 to-pink-500 text-white font-semibold shadow-lg hover:opacity-90 transition"
+                className="px-5 py-2 rounded-lg bg-gradient-to-r from-yellow-400 to-pink-500 !text-white font-semibold shadow-lg hover:opacity-90 transition"
               >
                 Get Started
               </Link>

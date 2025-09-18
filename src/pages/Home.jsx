@@ -124,7 +124,7 @@ export default function Home() {
 
         {/* CTA Button */}
         <div className="text-center mt-16 ">
-            <Link to ={target}  className="px-6 py-3 !bg-gradient-to-r !from-pink-400 !via-red-400 !to-yellow-500  text-white  font-semibold rounded-lg 
+            <Link to ={target}  className="px-6 py-3 !bg-gradient-to-r !from-pink-400 !via-red-400 !to-yellow-500  !text-white  font-semibold rounded-lg 
           shadow-lg hover:opacity-90  !from-yellow-500 !via-red-500 !to-pink-400 focus:outline-none focus:ring-0  ">
             Explore All Skills
           </Link>
