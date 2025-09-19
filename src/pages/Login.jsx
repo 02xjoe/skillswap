@@ -30,7 +30,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100">
       {/** Outer wrapper takes full height and centers content */}
 
       <div className="w-full max-w-md bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-8">
@@ -49,42 +49,55 @@ export default function Login() {
           )}
 
           {/** Email Input */}
-          <div>
+        <div>
             <label className="block text-sm font-medium mb-1 text-gray-600">
-              Email
+                          Email
             </label>
-            <input
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="Enter your email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+            <div className="relative rounded-lg overflow-hidden">
+                          {/* gradient border layer */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600"></div>
 
+                          {/* input with padding so border shows */}
+            <input
+                type="email"
+                placeholder="Enter your email"
+                className="relative w-full px-4 py-2 bg-white/80 text-gray-800 placeholder:text-gray-500 focus:outline-none focus:ring-0"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+            />
+            </div>
+        </div>
+              
           {/** Password Input */}
           <div>
-            <label className="block text-sm font-medium mb-1 text-gray-600">
-              Password
-            </label>
-            <input
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="Enter your password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+                <label className="block text-sm font-medium mb-1 text-gray-600">
+                          Password
+                </label>
+                <div className="relative rounded-lg overflow-hidden">
+                          {/* gradient border layer */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600"></div>
+
+                          {/* input with padding so border shows */}
+                <input
+                    type="password"
+                    placeholder="Enter your password"
+                    className="relative w-full px-4 py-2 bg-white/80 text-gray-800 placeholder:text-gray-500 focus:outline-none focus:ring-0"
+                />
+                </div>
           </div>
 
           {/** Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition"
-          >
-            Log in
-          </button>
+                 <button
+                      type="submit"
+                      className="relative w-full py-3 rounded-lg font-semibold text-white shadow-md hover:opacity-90 transition overflow-hidden"
+                  >
+                      {/*gradient background. 110 makes the gradient bg ~10% larger so the "hard stop' colors sit outside the clipped area*/}
+                      <span className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 scale-110"></span>
+
+                      {/* text sits above gradient */}
+                      <span className="relative z-10">Log in</span> {/* button text wrapped in relative z-10 so it stays above the gradient background */}
+                  </button>
         </form>
 
         {/** Divider */}
