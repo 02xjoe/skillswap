@@ -24,7 +24,7 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen mt-10 flex items-center justify-center bg-gradient-to-br from-blue-50 mt-20 via-white to-purple-50 relative">
+    <div className="min-h-screen  flex items-center justify-center bg-gradient-to-br from-blue-50  via-white to-purple-50 relative">
       {/* Glow / Decoration */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-pink-400/30 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-10 w-72 h-72 bg-yellow-400/30 rounded-full blur-3xl"></div>
