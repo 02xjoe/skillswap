@@ -693,7 +693,7 @@ export default function Dashboard() {
 }
 
 /* -------------------------
-   Helper: niceTime to format Firestore timestamps safely
+   Helper: niceTime to format Firestore timestamps safelyy
    ------------------------- */
 function niceTime(ts) {
   try {
