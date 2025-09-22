@@ -78,7 +78,7 @@ a:focus-visible {
   background: linear-gradient(to right, #facc15, #fb923c, #ec4899) !important;
 }
 
-/* Fade-up animation when navigating between pages */
+/* Fade-up animation when navigating between pagess */
 .fade-up {
   animation: fadeUp 0.6s ease-in-out;
 }
