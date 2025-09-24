@@ -14,7 +14,7 @@ import React, { useEffect, useRef, useState } from "react"; // React + hooks
 /* ---------------------------
    Firebase imports (Firestore only, since Storage is replaced by S3)
    --------------------------- */
-import { db } from "../services/firebase.js"; // Assuming this exports Firestore db
+import { db } from "../services/firebase.js"; // Assuming this exports Firestore db...
 
 /* Firestore helpers */
 import {
