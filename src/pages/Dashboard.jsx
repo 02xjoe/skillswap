@@ -95,30 +95,49 @@ export default function Dashboard() {
      - Progress callback for UI feedback.
      ========================= */
   async function uploadFiles(filesArray, folder = "skills", setProgress = null) {
-    if (!filesArray || filesArray.length === 0) return [];
+    if (!filesArray || filesArray.length === 0) {
+      console.log("No files to upload; returning empty array.");
+      return [];
+    }
+      
 
     const files = Array.from(filesArray);
+    console.log("Uploading files:", {
+      folder,
+      fileCount: files.length,
+      fileNames: files.map(f => f.name),
+      fileTypes: files.map(f => f.type),
+      fileSizes: files.map(f => `${(f.size / 1024).toFixed(2)}MB`),
+    });
+
     const totalBytes = files.reduce((s, f) => s + f.size, 0);
     let uploadedBytes = 0;
 
     const promises = files.map(async (file) => {
       try {
+        // Sanitize filename to avoid special chars/spaces
+        const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+        console.log(`Requesting presigned URL for ${file.name} (sanitized: ${sanitizedFileName})`);
         // Request presigned URL from EC2 backend
-        const { data } = await axios.post("http://YOUR_EC2_IP:4000/get-presigned-url", {
-          fileName: `${folder}/${uid || "anon"}/${Date.now()}_${file.name.replace(/\s+/g, "_")}`,
-          fileType: file.type,
+        const { data } = await axios.post(`${import.meta.env.VITE_API_BASE}/get-presigned-url`, {
+          fileName: sanitizedFileName, //`${folder}/${uid || "anon"}/${Date.now()}_${file.name.replace(/\s+/g, "_")}`,
+          fileType: file.type || "application/octet-stream",
+          folder: folder, // Explicitly send folder
         });
+        console.log(`Received presigned URL for ${file.name}:`, data);
 
         const { uploadURL, fileURL } = data;
 
         // Upload directly to S3 with progress tracking
-        await axios.put(uploadURL, file, {
-          headers: { "Content-Type": file.type },
+        console.log(`Uploading ${file.name} to S3...`);
+        const putResponse = await axios.put(uploadURL, file, {
+          headers: { "Content-Type": file.type || "application/octet-stream" },
           onUploadProgress: (progressEvent) => {
             if (setProgress) {
               const current = progressEvent.loaded;
               const percent = Math.round(((uploadedBytes + current) / totalBytes) * 100);
               setProgress(Math.min(100, percent));
+              console.log(`Upload progress for ${file.name}: ${percent}%`);
             }
           },
         });
@@ -126,9 +145,13 @@ export default function Dashboard() {
         uploadedBytes += file.size;
         if (setProgress) setProgress(Math.min(100, Math.round((uploadedBytes / totalBytes) * 100)));
 
+        console.log(`Uploaded ${file.name} successfully.`);
         return { url: fileURL, type: file.type };
       } catch (err) {
-        console.error("File upload failed:", err);
+        console.error(`Upload failed for ${file.name}:`, {
+          message: err.message,
+          axiosDetails: err.response ? { status: err.response.status, data: err.response.data } : null,
+        });
         throw err;
       }
     });
@@ -320,10 +343,14 @@ export default function Dashboard() {
       setPostingSkill(true);
       setSkillUploadProgress(0);
 
-      console.log("Posting skill:", { title, shortDesc, desiredSwap, filesCount: skillFiles.length });
+      console.log("Posting skill:", { title, shortDesc, desiredSwap, filesCount: skillFiles.length,
+       fileNames: skillFiles.map(f => f.name), fileTypes: skillFiles.map(f => f.type), fileSizes: skillFiles.map(f => `${(f.size/1024).toFixed(2)}KB`),
+       });
 
       // Upload media to S3
+      console.log("Attempting S3 upload to:", import.meta.env.VITE_API_BASE);
       const media = await uploadFiles(skillFiles, "skills", setSkillUploadProgress);
+      console.log("S3 upload result:", media);
 
       // Build and save payload to Firestore
       const payload = {
@@ -336,7 +363,9 @@ export default function Dashboard() {
         createdAt: serverTimestamp(),
       };
 
-      await addDoc(collection(db, "skills"), payload);
+      console.log("Saving skill to Firestore:", payload);
+      const docRef= await addDoc(collection(db, "skills"), payload);
+      console.log("Skill saved to Firestore with ID:", docRef.id);
 
       // Reset form (cache updates via listener)
       setTitle("");
@@ -348,8 +377,13 @@ export default function Dashboard() {
 
       console.log("Skill posted; cache will update via listener.");
     } catch (err) {
-      console.error("Post skill failed:", err);
-      alert("Could not post skill.");
+      console.error("Post skill failed:", {
+        message: err.message,
+        code: err.code,
+        stack: err.stack,
+        axiosDetails: err.response ? { status: err.response.status, data: err.response.data } : null,
+      })
+      alert(`Could not post skill: ${err.message}`);
     } finally {
       setPostingSkill(false);
     }
@@ -582,12 +616,12 @@ export default function Dashboard() {
           <div className="lg:col-span-2 space-y-4">
             {/* Post skill */}
             <section className="bg-white rounded-2xl shadow p-4">
-              <h3 className="text-lg font-semibold mb-3">Add a Skill</h3>
+              <h3 className="text-lg font-semibold mb-3">Add a Skill or Post an Item to swap</h3>
               <form onSubmit={handlePostSkill} className="space-y-3">
                 <input
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Title (eg. React basics)"
+                  placeholder="Title (eg. Guitar lessons/ Art work for swap)"
                   className="w-full h-10 px-3 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-100 text-sm"
                   required
                 />
@@ -603,7 +637,7 @@ export default function Dashboard() {
                 <input
                   value={desiredSwap}
                   onChange={(e) => setDesiredSwap(e.target.value)}
-                  placeholder="What do you want in return? (eg. logo, 1-hour lesson)"
+                  placeholder="What do you want in return? (eg.  1-hour swimming lesson)"
                   className="w-full h-10 px-3 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-100 text-sm"
                 />
 
