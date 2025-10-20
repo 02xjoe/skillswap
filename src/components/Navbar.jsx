@@ -37,7 +37,7 @@ export default function Navbar() {
           <Link
             to="/"
             className={`${
-              scrolled ? "text-gray-800" : "!text-blue-600"
+              scrolled ? "text-gray-800" : "!text-yellow-400"
             } hover:text-blue-600 relative group`}
           >
             Home
@@ -46,7 +46,7 @@ export default function Navbar() {
           <Link
             to="/skills"
             className={`${
-              scrolled ? "text-gray-800" : "!text-blue-600"
+              scrolled ? "text-gray-800" : "!text-pink-400"
             } hover:text-blue-600 relative group`}
           >
             Skills
@@ -55,7 +55,7 @@ export default function Navbar() {
           <Link
             to="/about"
             className={`${
-              scrolled ? "text-gray-800" : "!text-blue-600"
+              scrolled ? "text-gray-800" : "!text-pink-400"
             } hover:text-blue-600 relative group`}
           >
             About

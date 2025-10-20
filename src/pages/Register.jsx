@@ -71,7 +71,7 @@ export default function Register() {
             <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
            
             <div className="relative rounded-lg overflow-hidden">
-                          {/* gradient border layer */}
+                          {/* gradient border layerr */}
                 <div className="absolute inset-0 bg-gradient-to-r from-yellow-600   to-pink-600"></div>
             <input
               className="relative w-full px-4 py-2 bg-white/80 text-gray-800 placeholder:text-gray-500 focus:outline-none focus:ring-0"
