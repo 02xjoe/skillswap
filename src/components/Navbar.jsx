@@ -63,7 +63,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Auth Buttonss*/}
+        {/* Auth Buttons*/}
         <div className="flex space-x-4">
           {user ? (
             <>
