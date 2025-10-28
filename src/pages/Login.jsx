@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 export default function Login() {
     /** Bring in login function from our Auth context */
@@ -10,6 +11,22 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+
+
+const auth = getAuth();
+
+const handleForgotPassword = async () => {
+    const emailAddress = prompt("Please enter your email address for password reset:");
+
+    if (emailAddress) {
+        try {
+            await sendPasswordResetEmail(auth, emailAddress);
+            alert("Password reset email sent! Please check your inbox.");
+        } catch (error) {
+            alert("Error sending password reset email: " + error.message);
+    }
+
+}}
 
     /** Navigation helpers */
     const navigate = useNavigate();
@@ -104,6 +121,13 @@ export default function Login() {
                         {/* text sits above gradient */}
                         <span className="relative z-10">Log in</span> {/* button text wrapped in relative z-10 so it stays above the gradient background */}
                     </button>
+
+                    <p
+                        onClick={handleForgotPassword}
+                        className="text-blue-500 text-sm mt-2 cursor-pointer hover:underline"
+                    >
+                        Forgot Password?
+                    </p>
                 </form>
 
                 {/** Divider */}
