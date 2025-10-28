@@ -683,7 +683,7 @@ export default function Dashboard() {
               ) : (
                 <div className="grid grid-cols-1 gap-3">
                   {mySkills.map((s) => (
-                    <div key={s.id} className="border rounded-md p-3 flex items-start gap-3">
+                    <div key={s.id} className=" shadow-sm rounded-md p-3 flex items-start gap-3">
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
                           <div>
@@ -736,7 +736,7 @@ export default function Dashboard() {
               ) : (
                 <div className="space-y-2">
                   {incomingRequests.map((r) => (
-                    <div key={r.id} className="border rounded p-2 text-sm">
+                    <div key={r.id} className="shadow-sm rounded p-2 text-sm">
                       <div className="font-medium">{r.skillTitle}</div>
                       <div className="text-xs text-gray-500">From: {r.fromUserEmail || "Anonymous"}</div>
                       <div className="mt-1 text-sm">{r.message}</div>
@@ -776,7 +776,7 @@ export default function Dashboard() {
               ) : (
                 <div className="space-y-2">
                   {outgoingRequests.map((r) => (
-                    <div key={r.id} className="border rounded p-2 text-sm flex justify-between items-start">
+                    <div key={r.id} className=" shadow-sm rounded p-2 text-sm flex justify-between items-start">
                       <div>
                         <div className="font-medium">{r.skillTitle}</div>
                         <div className="text-xs text-gray-500">To: {r.toUserEmail || "User"}</div>
