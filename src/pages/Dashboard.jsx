@@ -400,12 +400,13 @@ export default function Dashboard() {
 
     try {
       await deleteDoc(doc(db, "skills", skill.id));
-      console.log("Deleted skill; cache will update via listener.");
+      console.log("Deleted skill successfully; cache will update via listener.");
     } catch (err) {
       console.error("Delete skill failed:", err);
       alert("Could not delete skill.");
     }
   }
+
 
   /* =========================
      REQUEST LISTENERS (incoming & outgoing) + caching
