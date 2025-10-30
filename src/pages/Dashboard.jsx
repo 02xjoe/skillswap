@@ -35,7 +35,7 @@ import {
 /* Axios for API calls to EC2 backend */
 import axios from "axios";
 
-/* Custom auth context hook - returns { user } (assuming same as old) */
+/* Custom auth context hook - returns {user } (assuming same as old) */
 import { useAuth } from "../context/AuthContext.jsx";
 
 /* ---------------------------
