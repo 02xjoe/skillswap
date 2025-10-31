@@ -29,7 +29,7 @@ import {
   setDoc,
   deleteDoc,
   updateDoc,
-  getDoc, // Used to fetch users/{uid} doc once
+  getDoc, // Used to fetch users/{uid} doc once..
 } from "firebase/firestore";
 
 /* Axios for API calls to EC2 backend */
