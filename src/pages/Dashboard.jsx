@@ -425,7 +425,7 @@ export default function Dashboard() {
     console.error("Delete skill failed:", err);
     alert("Could not delete skill.");
   }
-} */
+} 
 
  
      async function handleDeleteSkill(skill) {
@@ -433,13 +433,47 @@ export default function Dashboard() {
     if (!confirm("Delete this skill?")) return;
 
     try {
+      const auth = getAuth();
+      const uid = auth.currentUser?.uid;
+
+      if (!uid) {
+        alert("Please sign in to delete a skill.");
+        return;
+      }
+
+      // if the skill has an ownerId, confirm it matches current user
+      if (skill.ownerId && uid !== skill.ownerId) {
+        alert("You can only delete your own skills.");
+        return;
+      }
+
+      console.log("Deleting skill:", skill.id);
       await deleteDoc(doc(db, "skills", skill.id));
       console.log("Deleted skill successfully; cache will update via listener.");
+    
     } catch (err) {
       console.error("Delete skill failed:", err);
-      alert("Could not delete skill.");
-    }
-  } 
+      alert("Could not delete skill");
+    }  
+  } */
+  
+    async function handleDeleteSkill(skill) {
+  if (!skill || !skill.id) return;
+  if (!confirm("Delete this skill?")) return;
+
+  try {
+    const user = auth.currentUser;
+    if (!user) throw new Error("User not logged in");
+
+    console.log("Deleting skill:", skill.id, "by", user.uid);
+    await deleteDoc(doc(db, "skills", skill.id));
+    console.log("Deleted skill successfully.");
+  } catch (err) {
+    console.error("Delete skill failed:", err);
+    alert("Could not delete skill.");
+  }
+}
+
 
 
   /* =========================
