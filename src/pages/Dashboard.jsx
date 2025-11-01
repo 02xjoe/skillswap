@@ -15,6 +15,10 @@ import React, { useEffect, useRef, useState } from "react"; // React + hooks
    Firebase imports (Firestore only, since Storage is replaced by S3)
    --------------------------- */
 import { db } from "../services/firebase.js"; // Assuming this exports Firestore db...
+import { getAuth } from "firebase/auth";
+
+
+/*const auth = getAuth(); */
 
 /* Firestore helpers */
 import {
@@ -38,6 +42,9 @@ import axios from "axios";
 /* Custom auth context hook - returns {user } (assuming same as old) */
 import { useAuth } from "../context/AuthContext.jsx";
 
+/*import { getAuth } from "firebase/auth";*/
+/*window.auth = getAuth(); // For debugging if needed */
+
 /* ---------------------------
    Dashboard component
    --------------------------- */
@@ -46,7 +53,7 @@ export default function Dashboard() {
      Auth / user info
      --------------------------- */
   const { user } = useAuth(); // Current logged-in user from context
-  const uid = user?.uid || null; // Convenience uid (null if not logged in)
+  const uid = user?.uid || null; // Convenience uid (null if not logged in) 
 
   /* ---------------------------
      PROFILE STATE
@@ -393,8 +400,35 @@ export default function Dashboard() {
      DELETE SKILL: remove Firestore doc (no S3 delete, as new version doesn't handle deletion)
      - Cache updates via onSnapshot.
      - Note: For full S3 cleanup, add delete logic if needed (requires storing S3 keys).
-     ========================= */
-  async function handleDeleteSkill(skill) {
+    ========================= */
+   
+   /* async function handleDeleteSkill(skill) {
+  if (!skill || !skill.id) return;
+  if (!confirm("Delete this skill?")) return;
+
+  try {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const uid = user?.uid;
+
+    console.log("Current UID:", uid, "Skill owner:", skill.ownerId);
+
+    if (uid !== skill.ownerId) {
+      alert("You can only delete your own skills.");
+      return;
+    }
+
+    console.log("Deleting skill:", skill.id);
+    await deleteDoc(doc(db, "skills", skill.id));
+    console.log("Deleted skill successfully.");
+  } catch (err) {
+    console.error("Delete skill failed:", err);
+    alert("Could not delete skill.");
+  }
+} */
+
+ 
+     async function handleDeleteSkill(skill) {
     if (!skill || !skill.id) return;
     if (!confirm("Delete this skill?")) return;
 
@@ -405,7 +439,7 @@ export default function Dashboard() {
       console.error("Delete skill failed:", err);
       alert("Could not delete skill.");
     }
-  }
+  } 
 
 
   /* =========================
